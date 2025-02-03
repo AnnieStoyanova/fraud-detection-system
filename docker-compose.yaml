@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    container_name: bank_transactions_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Slavovi@2024
+      POSTGRES_DB: bankSystem
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: bank_transactions_api
+    restart: always
+    ports:
+      - "8080:8081"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASSWORD: Slavovi@2024
+      DB_NAME: bankSystem
+
+volumes:
+  postgres_data:
