@@ -16,13 +16,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-//@Slf4j
+@Slf4j
 public class FraudDetectionService {
 
     private final TransactionRepository transactionRepository;
     private final BlacklistedCountryRepository blacklistedCountryRepository;
 
-    private static final Logger log = LoggerFactory.getLogger(FraudDetectionService.class);
+   // private static final Logger log = LoggerFactory.getLogger(FraudDetectionService.class);
 
 
     public FraudDetectionService(TransactionRepository transactionRepository, BlacklistedCountryRepository blacklistedCountryRepository) {

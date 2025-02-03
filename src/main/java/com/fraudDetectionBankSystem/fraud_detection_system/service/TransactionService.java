@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -67,6 +69,13 @@ public class TransactionService {
                 fraudCheckResult
         );
     }
+
+    public List<TransactionDTO> getAllTransactions() {
+        return this.transactionRepository.findAll().stream()
+                .map(transaction -> mapToDTO(transaction, new FraudCheckResult(false, null)))
+                .collect(Collectors.toList());
+    }
+
 }
 
 
