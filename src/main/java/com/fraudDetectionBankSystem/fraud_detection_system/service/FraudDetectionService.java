@@ -22,9 +22,6 @@ public class FraudDetectionService {
     private final TransactionRepository transactionRepository;
     private final BlacklistedCountryRepository blacklistedCountryRepository;
 
-   // private static final Logger log = LoggerFactory.getLogger(FraudDetectionService.class);
-
-
     public FraudDetectionService(TransactionRepository transactionRepository, BlacklistedCountryRepository blacklistedCountryRepository) {
         this.transactionRepository = transactionRepository;
         this.blacklistedCountryRepository = blacklistedCountryRepository;
@@ -61,7 +58,7 @@ public class FraudDetectionService {
     // Rule 1: More than 10 transactions in 1 minute
     public boolean isTimeFraud(Transaction transaction) {
         LocalDateTime oneMinuteAgo = transaction.getTimestamp().minusMinutes(1);
-        return transactionRepository.countTransactionsInLastMinute(transaction.getUserId(), oneMinuteAgo) > 10;
+        return transactionRepository.countByUserIdAndTimestampGreaterThanEqual(transaction.getUserId(), oneMinuteAgo) > 10;
     }
 
 
@@ -86,7 +83,7 @@ public class FraudDetectionService {
 
 
     private List<Transaction> fetchRecentTransactions(Transaction transaction, LocalDateTime thirtyMinutesAgo) {
-        return transactionRepository.findRecentTransactions(
+        return transactionRepository.findByUserIdAndTimestampGreaterThanEqual(
                 transaction.getUserId(), thirtyMinutesAgo
         );
     }
@@ -99,7 +96,7 @@ public class FraudDetectionService {
 
     // Rule 4: Transactions in 3 Countries in 10 Minutes
     public boolean isMultipleCountryFraud(Transaction transaction) {
-        List<String> countries = transactionRepository.findDistinctCountries
+        List<String> countries = transactionRepository.findDistinctCountryByUserIdAndTimestampGreaterThanEqual
                 (transaction.getUserId(), transaction.getTimestamp().minusMinutes(10));
         return countries.size() >= 3;
     }
