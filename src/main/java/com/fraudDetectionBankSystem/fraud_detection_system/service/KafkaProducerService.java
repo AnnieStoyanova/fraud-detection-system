@@ -6,15 +6,12 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class KafkaProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final ObjectMapper objectMapper; // JSON Converter
+    private final ObjectMapper objectMapper;
 
     public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
@@ -23,10 +20,9 @@ public class KafkaProducerService {
 
     public void sendTransaction(String topic, TransactionRequestDTO transactionRequestDTO) {
         try {
-            // Convert TransactionRequestDTO to JSON String
             String jsonMessage = objectMapper.writeValueAsString(transactionRequestDTO);
 
-            System.out.println("Sending JSON message to Kafka: " + jsonMessage); // DEBUGGING LOG
+            System.out.println("Sending JSON message to Kafka: " + jsonMessage);
 
             CompletableFuture<Void> future = kafkaTemplate.send(topic, jsonMessage)
                     .thenAccept(result -> System.out.println("Successfully sent: " + jsonMessage))
@@ -35,7 +31,7 @@ public class KafkaProducerService {
                         return null;
                     });
 
-            future.join(); // Optional: Blocks execution for debugging
+            future.join();
 
         } catch (Exception e) {
             System.err.println("Error serializing transaction: " + e.getMessage());

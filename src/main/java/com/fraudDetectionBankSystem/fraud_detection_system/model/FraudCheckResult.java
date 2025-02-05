@@ -7,30 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class FraudCheckResult {
     private boolean isFraud;
     private String reason;
 
-    public FraudCheckResult(boolean isFraud, String reason) {
-        this.isFraud = isFraud;
-        this.reason = reason;
-    }
-
     public boolean isFraud() {
         return isFraud;
-    }
-
-    public void setFraud(boolean fraud) {
-        isFraud = fraud;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
     }
 }

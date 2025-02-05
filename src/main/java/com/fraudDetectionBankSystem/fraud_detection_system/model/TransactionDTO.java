@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class TransactionDTO {
     private Long tranId;
@@ -17,13 +17,5 @@ public class TransactionDTO {
     private LocalDateTime timestamp;
     private String country;
     private FraudCheckResult fraudCheckResult;
-
-    public TransactionDTO(Long tranId, Double amount, LocalDateTime timestamp, String country, FraudCheckResult fraudCheckResult) {
-        this.tranId = tranId;
-        this.amount = amount;
-        this.timestamp = timestamp;
-        this.country = country;
-        this.fraudCheckResult = fraudCheckResult;
-    }
 }
 

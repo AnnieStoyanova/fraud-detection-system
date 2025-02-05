@@ -14,14 +14,11 @@ import java.util.stream.Collectors;
 
 
 @Service
-//@Slf4j
+@Slf4j
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final FraudDetectionService fraudDetectionService;
-
-    private static final Logger log = LoggerFactory.getLogger(FraudDetectionService.class);
-
 
     public TransactionService(TransactionRepository transactionRepository,
                               FraudDetectionService fraudDetectionService) {
